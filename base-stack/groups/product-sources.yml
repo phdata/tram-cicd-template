@@ -1,0 +1,15 @@
+model:
+  name: product-source
+members:
+  - env: DEV
+    product: PDL
+    source: MAVENLINK
+    access_level: SHARED
+  - env: DEV
+    product: PDL
+    source: SALESFORCE
+    access_level: RO
+  - env: DEV
+    product: PDL
+    source: JIRA
+    access_level: RW

@@ -1,0 +1,12 @@
+model:
+  name: product
+  defaults:
+    warehouse_size: XSMALL
+    scaling_policy: ECONOMY
+    auto_suspend: 600
+    auto_resume: true
+    min_cluster_count: 1
+    max_cluster_count: 1
+members:
+  - env: DEV
+    product: PDL

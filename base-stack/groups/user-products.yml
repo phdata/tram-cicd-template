@@ -1,0 +1,7 @@
+model:
+  name: user-product
+members:
+  - env: DEV
+    product: PDL
+    username: tfokken
+    access_level: SHARED

@@ -1,0 +1,7 @@
+model:
+  name: admin-member
+members:
+  - admin_role: SYSADMIN
+    username: tfokken
+  - admin_role: SECURITYADMIN
+    username: tfokken

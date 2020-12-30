@@ -1,0 +1,15 @@
+model:
+  name: source-member
+members:
+  - env: DEV
+    source: MAVENLINK
+    function: ADMIN
+    username: tfokken
+  - env: DEV
+    source: JIRA
+    function: ENGINEER
+    username: tfokken
+  - env: DEV
+    source: SALESFORCE
+    function: ADMIN
+    username: tfokken
