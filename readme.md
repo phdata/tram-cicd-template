@@ -3,10 +3,10 @@
 This repository is base example stack for deploying a new Snowflake environment.  This example covers creating data sources, users, service accounts, and role memberships.  Use this repository as a template or starting point when integrating Tram for a customer.
 
 # Roles
-In order to create a simple role hierarchy this repository uses functional roles to clearly state purpose.
+In order to create a simple role hierarchy, this repository uses functional roles to clearly state purpose.
 
 ## Functional Roles (FR)
-A functional role inherits permissions from data roles(DR) or access roles(AR).  Functional roles should be used for all query contexts which require the use of both a warehouse and database to execute.  Almost all queries will be ran using a functional role.
+A functional role inherits permissions from data roles(DR) or access roles(AR).  Functional roles should be used for all query contexts which require the use of both a warehouse and database to execute.  Almost all queries will be run using a functional role.
 
 ## Data Roles (DR)
 A Data role defines the {{ access_level }} to a specific database or schema.  Data roles can be used for granting access to other databases.
@@ -19,7 +19,7 @@ Access roles grant access to other Snowflake objects to a functional role.  The 
 At the core of this stack are 3 distinct groupings of databases, schemas, warehouses, roles, and permissions.
 
 ## User
-[User](base-stack/models/user.yml) models create new user, create a new schema `{{ username }}` in the `USER` databases, and grant access to the `USER_ADH_WH` warehouse.
+[User](base-stack/models/user.yml) models create new user, create a new schema `{{ username }}` in the `USER` database, and grant access to the `USER_ADH_WH` warehouse.
 
 ![Tram User model](base-stack/docs/images/phdata-tram-base-stack-user.png)
 
