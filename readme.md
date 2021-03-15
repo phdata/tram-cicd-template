@@ -19,7 +19,7 @@ Access roles grant access to other Snowflake objects to a functional role.  The 
 At the core of this stack are 3 distinct groupings of databases, schemas, warehouses, roles, and permissions.
 
 ## User
-[User](base-stack/models/user.yml) models create new user, create a new schema `{{ username }}` in the `USER` database, and grant access to the `USER_ADH_WH` warehouse.
+[User](base-stack/models/user.yml) models create new user, create a new schema `{{ username }}` in the `USER` database, and grant access to the `USER_ADH_WH` warehouse (ADH stands for adhoc).
 
 ![Tram User model](base-stack/docs/images/phdata-tram-base-stack-user.png)
 
