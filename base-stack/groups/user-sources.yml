@@ -1,0 +1,7 @@
+model:
+  name: user-source
+members:
+  - env: DEV
+    source: JIRA
+    username: tfokken
+    access_level: RO

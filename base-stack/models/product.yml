@@ -1,0 +1,183 @@
+databases:
+  - name: "P_{{ env }}_{{ product }}"
+    schemas:
+      - name: MAIN
+      - name: INTEGRATION
+      - name: SHARED
+warehouses:
+  - name: "P_{{ env }}_{{ product }}_WH"
+    parameters:
+      - name: WAREHOUSE_SIZE
+        value: "{{ warehouse_size }}"
+      - name: INITIALLY_SUSPENDED
+        value: true
+      - name: SCALING_POLICY
+        value: "{{ scaling_policy }}"
+      - name: AUTO_SUSPEND
+        value: "{{ auto_suspend }}"
+      - name: AUTO_RESUME
+        value: "{{ auto_resume }}"
+      - name: MIN_CLUSTER_COUNT
+        value: "{{ min_cluster_count }}"
+      - name: MAX_CLUSTER_COUNT
+        value: "{{ max_cluster_count }}"
+roles:
+  - name: AR_P_{{ env }}_{{ product }}_WH
+  - name: AR_P_{{ env }}_{{ product }}_WH_ADMIN
+  - name: DR_P_{{ env }}_{{ product }}
+  - name: DR_P_{{ env }}_{{ product }}_RW
+  - name: DR_P_{{ env }}_{{ product }}_RO
+  - name: DR_P_{{ env }}_{{ product }}_SHARED
+  - name: FR_P_{{ env }}_{{ product }}_ADMIN
+  - name: FR_P_{{ env }}_{{ product }}_ENGINEER
+  - name: FR_P_{{ env }}_{{ product }}_READER
+privileges:
+    # Warehouse
+    # ADMIN
+  - privilege: "ALL PRIVILEGES"
+    objectType: "WAREHOUSE"
+    objectName: "P_{{ env }}_{{ product }}_WH"
+    roleName: "AR_P_{{ env }}_{{ product }}_WH_ADMIN"
+    grantOption: true
+    # USER
+  - privilege: "USAGE"
+    objectType: "WAREHOUSE"
+    objectName: "P_{{ env }}_{{ product }}_WH"
+    roleName: "AR_P_{{ env }}_{{ product }}_WH"
+    grantOption: false
+    # Database
+    # ADMIN
+  - privilege: "ALL PRIVILEGES"
+    objectType: "DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "FR_P_{{ env }}_{{ product }}_ADMIN"
+    grantOption: true
+    # USER
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
+    grantOption: false
+    # Schema
+    # ADMIN
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.MAIN"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.INTEGRATION"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: true
+    # USER
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.MAIN"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.INTEGRATION"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
+    grantOption: false
+    # Tables
+  - privilege: "SELECT"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.MAIN"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.INTEGRATION"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
+    grantOption: false
+    # Views
+  - privilege: "SELECT"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.MAIN"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.INTEGRATION"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
+    grantOption: false
+roleGrants:
+  - name: "AR_P_{{ env }}_{{ product }}_WH"
+    roles:
+      - "FR_P_{{ env }}_{{ product }}_READER"
+  - name: "AR_A_TASK_OPERATOR"
+    roles:
+      - "FR_P_{{ env }}_{{ product }}_ENGINEER"
+  - name: "AR_I_ADLS_PHDATA_SNOWFLAKE_STAGE"
+    roles:
+      - "FR_P_{{ env }}_{{ product }}_ENGINEER"
+  - name: "AR_P_{{ env }}_{{ product }}_WH_ADMIN"
+    roles:
+      - "FR_P_{{ env }}_{{ product }}_ENGINEER"
+  - name: "DR_P_{{ env }}_{{ product }}"
+    roles:
+      - "DR_P_{{ env }}_{{ product }}_RO"
+  - name: "DR_P_{{ env }}_{{ product }}_SHARED"
+    roles:
+      - "DR_P_{{ env }}_{{ product }}_RO"
+  - name: "DR_P_{{ env }}_{{ product }}_RO"
+    roles:
+      - "DR_P_{{ env }}_{{ product }}_RW"
+  - name: "DR_P_{{ env }}_{{ product }}_RO"
+    roles:
+      - "FR_P_{{ env }}_{{ product }}_READER"
+  - name: "DR_P_{{ env }}_{{ product }}_RW"
+    roles:
+      - "FR_P_{{ env }}_{{ product }}_ENGINEER"
+  - name: "FR_P_{{ env }}_{{ product }}_ENGINEER"
+    roles:
+      - "FR_P_{{ env }}_{{ product }}_ADMIN"
+  - name: "FR_P_{{ env }}_{{ product }}_ADMIN"
+    roles:
+      - "SYSADMIN"

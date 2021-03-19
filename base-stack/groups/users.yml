@@ -1,0 +1,10 @@
+model:
+  name: user
+  defaults:
+    must_change_password: true
+    rsa_public_key: ""
+    rsa_public_key_2: ""
+    password: "phDataAzure2020!"
+members:
+  - username: tfokken
+    email: "troy@phdata.io"
