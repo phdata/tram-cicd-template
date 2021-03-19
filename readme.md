@@ -8,10 +8,7 @@ Full Tram documentation can be found on the [phData Customer Docs](https://docs.
 
 ## Tram CICD
 
-This repository provides example build scripts for Jenkins, Bitbucket and AWS CodeBuild. Details on the CICD workflow can be found in the  [CICD Deployment Strategy](./cicd_deployment_strategy.md) document.
-
-This project serves as a Snowflake resources manager for the <https://phdata.snowflakecomputing.com> Snowflake instance. It contains yaml files which are processed by the 
-[Tram](https://bitbucket.org/phdata/tram/src/master/) provisioning service. 
+This repository provides example build scripts for Jenkins, Bitbucket and AWS CodeBuild. Details on the CICD workflow and configuring this repo can be found in the  [CICD Deployment Strategy](./cicd_deployment_strategy.md) document.
 
 ## Stacks
 
