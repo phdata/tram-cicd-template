@@ -12,4 +12,4 @@ This repository provides example build scripts for Jenkins, Bitbucket and AWS Co
 
 ## Stacks
 
-Tram example stacks can be found in the `stacks/` directory.
+Tram example stacks can be found in the `stacks/` directory. For example, see the [soure-target](https://github.com/phdata/tram-cicd-template/tree/main/stacks/source-target) stack which is considered phData's base stack for customer engagements.
