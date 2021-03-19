@@ -1,0 +1,9 @@
+#!/bin/bash
+set -eu -o pipefail
+TRAM_VERSION=$(cat TRAM_VERSION)
+echo "Fetching Tram version: $TRAM_VERSION"
+
+curl --fail -o tram-provisioning.jar -u${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN} \
+  https://repository.phdata.io/artifactory/libs-release-private/io/phdata/tram/"$TRAM_VERSION"/provisioning-"$TRAM_VERSION".jar
+
+echo "Fetch successful"

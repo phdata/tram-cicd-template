@@ -1,0 +1,7 @@
+# IDEA
+# ----
+.idea
+*.log
+*.iml
+*.jar
+tram-statements.sql

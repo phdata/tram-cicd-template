@@ -1,0 +1,25 @@
+image: openjdk:11
+
+pipelines:
+  definitions:
+    - step: &fetch
+        name: "Fetch Tram"
+        script:
+          - bin/tram-fetch
+        artifacts:
+          - tram-provisioning.jar
+    - step: &dry-run
+        name: "Dry Run"
+        script:
+          - bin/tram-dry-run
+          - cat tram-statements.sql
+    - step: &provision
+        name: "Dry Run"
+        script:
+          - bin/tram-provision
+  default:
+    - step: *fetch
+    - step: *dry-run
+  branches:
+    master:
+      - step: *provision
