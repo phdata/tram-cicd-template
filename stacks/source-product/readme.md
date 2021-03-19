@@ -1,4 +1,4 @@
-# Base Tram Stack
+# Source-Product
 
 This repository is base example stack for deploying a new Snowflake environment.  This example covers creating data sources, users, service accounts, and role memberships.  Use this repository as a template or starting point when integrating Tram for a customer.
 
