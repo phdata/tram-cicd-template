@@ -6,7 +6,7 @@ This workflow will work for any infrastructure provisioned using the file-based 
 
 ### Source Control
 
-Tram resources, including ‘group’ files and ‘templates’ should always be stored in source control. 
+Tram resources, including 'group' and 'model' files should always be stored in source control. 
 
 
 #### Source Control Configuration
@@ -16,14 +16,14 @@ To use this workflow, the git ‘master’ branch should be restricted to a smal
 
 ### Tram CI/CD Workflow
 
-Tram can be run using a build tool like AWS CodeDeploy, BitBucket Pipelines, any other on-prem or SAAS build tool.
+Tram can be run using a build tool like AWS CodeDeploy, BitBucket Pipelines, any other on-prem or SaaS build tool.
 
 
 #### Workflow Steps
 
 
 
-*   Users will make a change request or pull request to the Tram resource files. This can include changes to group files (to provision new resources) or changes in templates (to define how Snowflake objects are provisioned).
+*   Users will make a change request or pull request to the Tram resource files. This can include changes to group files (to provision new resources) or changes in models (to define how Snowflake objects are provisioned).
 *   For any pull request, the build tool will be configured to run the `bin/tram-dry-run` script. This script will validate configuration file syntax, as well as print out a list of statements that Tram will execute against snowflake in the event the change is accepted.
 *   Privileged users will review the pull request/change request, providing feedback or accepting and rejecting changes.
 *   If the change is accepted, it should be merged into the ‘master’ branch.
