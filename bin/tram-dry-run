@@ -12,5 +12,5 @@ else
 fi
 
 
-$JAVA_CMD -cp ".:tram-provisioning.jar" -Dlog4j.configurationFile=log4j2.xml -Dloader.main="io.phdata.tram.App" org.springframework.boot.loader.PropertiesLauncher provision --stack $STACK --dry-run --groups --objects --colorize
+$JAVA_CMD -cp ".:tram-provisioning.jar" -Dlog4j.configurationFile=log4j2.xml -Dloader.main="io.phdata.tram.App" org.springframework.boot.loader.PropertiesLauncher provision --stack $STACK_PATH --dry-run --groups --objects --colorize
 
