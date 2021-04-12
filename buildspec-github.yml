@@ -1,0 +1,31 @@
+version: 0.2
+
+env:
+  variables:
+    owner_repo: phdata/tram-cicd-template
+    TRAM_PRIVATE_KEY_PEM: /svc/tram/private_key_pem
+    STACK_PATH: stacks/source-product
+  parameter-store:
+    access_token: /svc/github/access_token
+    ARTIFACTORY_USER: /svc/tram/phdata_artifcatory_user
+    ARTIFACTORY_TOKEN: /svc/tram/phdata_artifcatory_pwd
+    TRAM_PRIVATE_KEY_PASSWORD: /svc/tram/private_key_password
+phases:
+  install:
+    runtime-versions:
+       java: openjdk11
+  pre_build: 
+    commands:
+       - echo "TRAM PRE-BUILD"   
+  build:
+    commands:
+       - export stage="build"
+       - echo "TRAM BUILD"
+       - chmod +x $CODEBUILD_SRC_DIR/bin/*
+       - $CODEBUILD_SRC_DIR/bin/build-aws.sh
+  post_build:
+    commands:
+      - export stage="post_build"
+      - echo "TRAM post_build"
+      - chmod +x $CODEBUILD_SRC_DIR/bin/*
+      - $CODEBUILD_SRC_DIR/bin/build-aws.sh
