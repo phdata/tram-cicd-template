@@ -22,12 +22,14 @@ warehouses:
       - name: MAX_CLUSTER_COUNT
         value: "{{ max_cluster_count }}"
 roles:
+  # Warehouse
   - name: AR_P_{{ env }}_{{ product }}_WH
   - name: AR_P_{{ env }}_{{ product }}_WH_ADMIN
-  - name: DR_P_{{ env }}_{{ product }}
+  # Data
   - name: DR_P_{{ env }}_{{ product }}_RW
   - name: DR_P_{{ env }}_{{ product }}_RO
   - name: DR_P_{{ env }}_{{ product }}_SHARED
+  # Functional
   - name: FR_P_{{ env }}_{{ product }}_ADMIN
   - name: FR_P_{{ env }}_{{ product }}_ENGINEER
   - name: FR_P_{{ env }}_{{ product }}_READER
@@ -160,9 +162,6 @@ roleGrants:
   - name: "AR_P_{{ env }}_{{ product }}_WH_ADMIN"
     roles:
       - "FR_P_{{ env }}_{{ product }}_ENGINEER"
-  - name: "DR_P_{{ env }}_{{ product }}"
-    roles:
-      - "DR_P_{{ env }}_{{ product }}_RO"
   - name: "DR_P_{{ env }}_{{ product }}_SHARED"
     roles:
       - "DR_P_{{ env }}_{{ product }}_RO"
