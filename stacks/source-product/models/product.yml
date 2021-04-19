@@ -22,12 +22,14 @@ warehouses:
       - name: MAX_CLUSTER_COUNT
         value: "{{ max_cluster_count }}"
 roles:
+  # Warehouse
   - name: AR_P_{{ env }}_{{ product }}_WH
   - name: AR_P_{{ env }}_{{ product }}_WH_ADMIN
-  - name: DR_P_{{ env }}_{{ product }}
+  # Data
   - name: DR_P_{{ env }}_{{ product }}_RW
   - name: DR_P_{{ env }}_{{ product }}_RO
   - name: DR_P_{{ env }}_{{ product }}_SHARED
+  # Functional
   - name: FR_P_{{ env }}_{{ product }}_ADMIN
   - name: FR_P_{{ env }}_{{ product }}_ENGINEER
   - name: FR_P_{{ env }}_{{ product }}_READER
@@ -62,6 +64,7 @@ privileges:
     objectType: "DATABASE"
     objectName: "P_{{ env }}_{{ product }}"
     roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
   - privilege: "USAGE"
     objectType: "DATABASE"
     objectName: "P_{{ env }}_{{ product }}"
@@ -70,34 +73,14 @@ privileges:
     # Schema
     # ADMIN
   - privilege: "ALL PRIVILEGES"
-    objectType: "SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.MAIN"
-    roleName: "DR_P_{{ env }}_{{ product }}_RW"
-    grantOption: true
-  - privilege: "ALL PRIVILEGES"
-    objectType: "SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.INTEGRATION"
-    roleName: "DR_P_{{ env }}_{{ product }}_RW"
-    grantOption: true
-  - privilege: "ALL PRIVILEGES"
-    objectType: "SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    objectType: "ALL SCHEMAS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
     roleName: "DR_P_{{ env }}_{{ product }}_RW"
     grantOption: true
     # USER
   - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.MAIN"
-    roleName: "DR_P_{{ env }}_{{ product }}_RO"
-    grantOption: false
-  - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.INTEGRATION"
-    roleName: "DR_P_{{ env }}_{{ product }}_RO"
-    grantOption: false
-  - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    objectType: "ALL SCHEMAS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
     roleName: "DR_P_{{ env }}_{{ product }}_RO"
     grantOption: false
   - privilege: "USAGE"
@@ -105,20 +88,15 @@ privileges:
     objectName: "P_{{ env }}_{{ product }}.SHARED"
     roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
     grantOption: false
-    # Tables
-  - privilege: "SELECT"
-    objectType: "FUTURE TABLES IN SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.MAIN"
-    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    # Table
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE TABLES IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
     grantOption: false
   - privilege: "SELECT"
-    objectType: "FUTURE TABLES IN SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.INTEGRATION"
-    roleName: "DR_P_{{ env }}_{{ product }}_RO"
-    grantOption: false
-  - privilege: "SELECT"
-    objectType: "FUTURE TABLES IN SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    objectType: "FUTURE TABLES IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
     roleName: "DR_P_{{ env }}_{{ product }}_RO"
     grantOption: false
   - privilege: "SELECT"
@@ -126,26 +104,105 @@ privileges:
     objectName: "P_{{ env }}_{{ product }}.SHARED"
     roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
     grantOption: false
-    # Views
+    # External Table
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE EXTERNAL TABLES IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
   - privilege: "SELECT"
-    objectType: "FUTURE VIEWS IN SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.MAIN"
+    objectType: "FUTURE EXTERNAL TABLES IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
     roleName: "DR_P_{{ env }}_{{ product }}_RO"
     grantOption: false
   - privilege: "SELECT"
-    objectType: "FUTURE VIEWS IN SCHEMA"
-    objectName: "P_{{ env }}_{{ product }}.INTEGRATION"
-    roleName: "DR_P_{{ env }}_{{ product }}_RO"
-    grantOption: false
-  - privilege: "SELECT"
-    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectType: "FUTURE EXTERNAL TABLES IN SCHEMA"
     objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
+    grantOption: false
+    # View
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE VIEWS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE VIEWS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
     roleName: "DR_P_{{ env }}_{{ product }}_RO"
     grantOption: false
   - privilege: "SELECT"
     objectType: "FUTURE VIEWS IN SCHEMA"
     objectName: "P_{{ env }}_{{ product }}.SHARED"
     roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
+    grantOption: false
+    # Materialized View
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE MATERIALIZED VIEWS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE MATERIALIZED VIEWS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE MATERIALIZED VIEWS IN SCHEMA"
+    objectName: "P_{{ env }}_{{ product }}.SHARED"
+    roleName: "DR_P_{{ env }}_{{ product }}_SHARED"
+    grantOption: false
+    # Stream
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE STREAMS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+    # Task
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE TASKS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+  - privilege: "MONITOR"
+    objectType: "FUTURE TASKS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+    # Stage
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE STAGES IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+  - privilege: "READ"
+    objectType: "FUTURE STAGES IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RO"
+    grantOption: false
+    # File Format
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE FILE FORMATS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+    # Sequence
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE SEQUENCES IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+    # Function
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE FUNCTIONS IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
+    grantOption: false
+    # Procedure
+  - privilege: "ALL PRIVILEGES"
+    objectType: "FUTURE PROCEDURES IN DATABASE"
+    objectName: "P_{{ env }}_{{ product }}"
+    roleName: "DR_P_{{ env }}_{{ product }}_RW"
     grantOption: false
 roleGrants:
   - name: "AR_P_{{ env }}_{{ product }}_WH"
@@ -160,9 +217,6 @@ roleGrants:
   - name: "AR_P_{{ env }}_{{ product }}_WH_ADMIN"
     roles:
       - "FR_P_{{ env }}_{{ product }}_ENGINEER"
-  - name: "DR_P_{{ env }}_{{ product }}"
-    roles:
-      - "DR_P_{{ env }}_{{ product }}_RO"
   - name: "DR_P_{{ env }}_{{ product }}_SHARED"
     roles:
       - "DR_P_{{ env }}_{{ product }}_RO"
