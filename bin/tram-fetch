@@ -1,9 +1,16 @@
 #!/bin/bash
 set -eu -o pipefail
-TRAM_VERSION=$(cat TRAM_VERSION)
-echo "Fetching Tram version: $TRAM_VERSION"
 
-curl --fail -o tram-provisioning.jar -u${ARTIFACTORY_USER}:${ARTIFACTORY_TOKEN} \
-  https://repository.phdata.io/artifactory/libs-release-private/io/phdata/tram/"$TRAM_VERSION"/provisioning-"$TRAM_VERSION".jar
+DEFAULT_VERSION=$(cat TRAM_VERSION)
+
+TRAM_VERSION=${VERSION:-$DEFAULT_VERSION}
+
+echo "Using TRAM_VERSION: $TRAM_VERSION"
+
+path=https://repository.phdata.io/artifactory/libs-release-private/io/phdata/tram/$TRAM_VERSION/provisioning-$TRAM_VERSION.jar
+
+echo "Using path: $path"
+
+curl --fail -o tram-provisioning.jar -H 'Accept: application/json' -H "Authorization: Bearer ${ARTIFACTORY_TOKEN}" $path
 
 echo "Fetch successful"
