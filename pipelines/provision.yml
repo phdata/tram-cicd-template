@@ -1,0 +1,24 @@
+trigger:
+- master
+
+pr: none
+​
+steps:
+  pool:
+    vmImage: ubuntu-latest
+    - task: Bash@3
+      displayName: "Fetch Tram from phData Artifactory"
+      inputs:
+        filePath: bin/tram-fetch
+      env:
+        ARTIFACTORY_TOKEN: $(ArtifactoryToken)
+    - task: Bash@3
+      extends: fetch-template.yml
+      displayName: "Tram Provision"
+      inputs:
+        filePath: bin/tram-provision
+      env:
+        TRAM_SNOWFLAKE_URL: $(TramSnowflakeUrl)
+        TRAM_SNOWFLAKE_USER: $(TramSnowflakeUser)
+        TRAM_SNOWFLAKE_PASSWORD: $(TramSnowflakePassword)
+        STACK_PATH: stacks/source-product
