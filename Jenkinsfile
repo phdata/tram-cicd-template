@@ -8,7 +8,7 @@ pipeline {
         TRAM_SNOWFLAKE_USER = 'SNOWBOARDER_IT'
         TRAM_SNOWFLAKE_PASSWORD = credentials('TRAM_SNOWFLAKE_PASSWORD')
         TRAM_SNOWFLAKE_URL = 'snowflake://phdata.snowflakecomputing.com'
-        STACK_PATH = 'stacks/source-target'
+        STACK_PATH = 'stacks/source-product'
     }
 
     agent {
