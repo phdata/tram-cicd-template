@@ -1,0 +1,20 @@
+# Grants user access to projects. Can be based on ldap group as well.
+model:
+    name: project-member
+members:
+  - project: marketing
+    env: dev
+    username: testuser1
+    access: RW
+  - project: marketing
+    env: prod
+    username: testuser1
+    access: RW
+  - project: marketing
+    env: prod
+    username: testuser2
+    access: RO
+  - project: manhattan
+    env: dev
+    username: testuser2
+    access: RO

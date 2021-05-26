@@ -1,0 +1,9 @@
+# Creates sandboxes
+model:
+  name: sandbox
+  defaults:
+    warehouse_size: XSMALL
+members:
+  - sandbox_name: poc1
+  - sandbox_name: poc2
+    warehouse_size: SMALL

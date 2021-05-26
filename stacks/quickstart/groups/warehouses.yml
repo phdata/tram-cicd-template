@@ -1,0 +1,8 @@
+# Creates shared warehouses. In this case we are only creating one warehouse, for all user databases.
+model:
+  name: warehouse
+  defaults:
+    size: XSMALL
+members:
+  - name: USER_WH1
+    size: XSMALL

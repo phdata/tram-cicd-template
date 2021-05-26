@@ -1,0 +1,19 @@
+# Our list of users. Can also be backed by LDAP
+model:
+  name: user
+  defaults:
+    rsa_public_key: ""
+    rsa_public_key_2: ""
+members:
+    # NOTE: The properties password and must_change_password are only applied on first run
+    # and cannot be updated by tram after the user has been created. You can reset a users
+    # password from the console as follows:
+    #  ALTER USER <USER> SET password = '<PASSWORD>' must_change_password = true;
+  - username: testuser1
+    email: testuser1@phdata.io
+    password: "<REPLACE WITH PASSWORD>"
+    must_change_password: true
+  - username: testuser2
+    email: testuser2@phdata.io
+    password: "<REPLACE WITH PASSWORD>"
+    must_change_password: true
