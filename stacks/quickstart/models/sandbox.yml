@@ -1,0 +1,26 @@
+# Template for a Sandbox
+roles:
+  - name: "SANDBOX_{{sandbox_name}}"
+databases:
+  - name: "SANDBOX_{{sandbox_name}}"
+    schemas:
+      - name: "SANDBOX"
+        transient: true
+privileges:
+  - privilege: "MODIFY"
+    objectType: DATABASE
+    objectName: "SANDBOX_{{sandbox_name}}"
+    roleName: "SANDBOX_{{sandbox_name}}"
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: WAREHOUSE
+    objectName: "SANDBOX_{{sandbox_name}}"
+    roleName: "SANDBOX_{{sandbox_name}}"
+    grantOption: false
+warehouses:
+  - name: "SANDBOX_{{sandbox_name}}"
+    parameters:
+      - name: WAREHOUSE_SIZE
+        value: "{{warehouse_size}}"
+      - name: INITIALLY_SUSPENDED
+        value: true

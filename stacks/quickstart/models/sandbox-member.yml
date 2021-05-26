@@ -1,0 +1,5 @@
+# Template to grant user access to a sandbox
+roleGrants:
+  - name: SANDBOX_{{sandbox}}
+    users: 
+      - {{username}}

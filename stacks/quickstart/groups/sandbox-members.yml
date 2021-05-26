@@ -1,0 +1,10 @@
+# Grants user access to sandboxes. Can be based on ldap group as well.
+model:
+    name: sandbox-member
+members:
+    - sandbox: poc1
+      username: testuser1
+    - sandbox: poc1
+      username: testuser2
+    - sandbox: poc2
+      username: testuser1

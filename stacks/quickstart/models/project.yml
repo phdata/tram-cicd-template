@@ -1,0 +1,68 @@
+# Template for a Project which contains RAW, STAGING, and CURATED databases for a particular environment
+roles:
+  - name: "{{env}}_{{project_name}}_RW"
+  - name: "{{env}}_{{project_name}}_RO"
+privileges:
+  - privilege: "ALL PRIVILEGES"
+    objectType: DATABASE
+    objectName: "{{env}}_{{project_name}}"
+    roleName: "{{env}}_{{project_name}}_RW"
+    grantOption: false 
+  - privilege: "USAGE"
+    objectType: DATABASE
+    objectName: "{{env}}_{{project_name}}"
+    roleName: "{{env}}_{{project_name}}_RO"
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "all schemas in database"
+    objectName: "{{env}}_{{project_name}}"
+    roleName: "{{env}}_{{project_name}}_RO"
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: SCHEMA
+    objectName: "{{env}}_{{project_name}}.RAW"
+    roleName: "{{env}}_{{project_name}}_RW"
+  - privilege: "ALL PRIVILEGES"
+    objectType: SCHEMA
+    objectName: "{{env}}_{{project_name}}.STAGING"
+    roleName: "{{env}}_{{project_name}}_RW"
+  - privilege: "ALL PRIVILEGES"
+    objectType: SCHEMA
+    objectName: "{{env}}_{{project_name}}.CURATED"
+    roleName: "{{env}}_{{project_name}}_RW"
+    grantOption: false 
+  - privilege: "SELECT"
+    objectType: "future tables in schema"
+    objectName: "{{env}}_{{project_name}}.RAW"
+    roleName: "{{env}}_{{project_name}}_RO"
+  - privilege: "SELECT"
+    objectType: "future tables in schema"
+    objectName: "{{env}}_{{project_name}}.STAGING"
+    roleName: "{{env}}_{{project_name}}_RO"
+  - privilege: "SELECT"
+    objectType: "future tables in schema"
+    objectName: "{{env}}_{{project_name}}.CURATED"
+    roleName: "{{env}}_{{project_name}}_RO"
+  - privilege: "USAGE"
+    objectType: WAREHOUSE
+    objectName: "{{env}}_{{project_name}}"
+    roleName: "{{env}}_{{project_name}}_RO"
+    grantOption: false
+databases:
+  - name: "{{env}}_{{project_name}}"
+    schemas:
+      - name: "RAW"
+      - name: "STAGING"
+      - name: "CURATED"
+warehouses:
+  - name: "{{env}}_{{project_name}}"
+    parameters:
+      - name: WAREHOUSE_SIZE
+        value: "{{warehouse_size}}"
+      - name: INITIALLY_SUSPENDED
+        value: true
+roleGrants:
+  - name: "{{env}}_{{project_name}}_RO"
+    roles:
+      - "{{env}}_{{project_name}}_RW"
+
