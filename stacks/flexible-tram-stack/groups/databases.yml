@@ -1,0 +1,22 @@
+model:
+  name: database
+  defaults:
+    use_tags: true
+    use_schema_access_roles: false
+    data_retention_days: 1
+    access_role_name:
+      prefix: AR_
+      admin_suffix: _ADMIN
+      maintain_suffix: _MAINTAIN
+      report_suffix: _REPORT
+members:
+  - database_name: UTIL
+    schemas:
+      - schema_name: SHARED_STORED_PROCEDURES
+        stage_name: ""
+        schema_data_retention_days: 1
+    tag_pairs:
+      - tag_name: bu
+        tag_value: corp
+      - tag_name: orgid
+        tag_value: 42235

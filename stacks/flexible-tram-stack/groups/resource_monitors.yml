@@ -1,0 +1,16 @@
+model:
+  name: resource_monitor
+  defaults:
+    frequency: MONTHLY
+    startTimestamp: IMMEDIATELY
+    endTimestamp: ""
+    triggers:
+      - threshold: 75
+        action: NOTIFY
+      - threshold: 90
+        action: SUSPEND
+      - threshold: 100
+        action: SUSPEND_IMMEDIATE
+members:
+  - rm_name: DEFAULT_ACCOUNT_RM
+    credit_quota: 600

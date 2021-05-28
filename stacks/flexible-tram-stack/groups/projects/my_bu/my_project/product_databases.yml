@@ -1,0 +1,27 @@
+model:
+  name: database
+  defaults:
+    data_retention_days: 7
+    use_tags: true
+    tag_pairs:
+      - tag_name: bu
+        tag_value: corp
+      - tag_name: orgid
+        tag_value: 42235
+    use_schema_access_roles: true
+    access_role_name:
+      prefix: AR_
+      admin_suffix: _ADMIN
+      maintain_suffix: _MAINTAIN
+      report_suffix: _REPORT
+    schemas:
+      - schema_name: MODEL
+        stage_name: ""
+        schema_data_retention_days: 7
+      - schema_name: SUMMARY
+        stage_name: ""
+        schema_data_retention_days: 7
+members:
+  - database_name: MYUSER_REPORTING
+  - database_name: DEV_REPORTING
+  - database_name: PROD_REPORTING
