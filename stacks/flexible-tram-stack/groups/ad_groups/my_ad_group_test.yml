@@ -1,0 +1,10 @@
+model:
+  name: ldap_role_grant
+  defaults:
+    role_name: MY_ROLE
+    grant_to_composite_role: false
+    access_roles:
+      - AR_MYPROJECT_BU_INGEST_WH_USE
+      - AR_DEV_MONGO_MAINTAIN
+members:
+  - sAMAccountName: MYUSER

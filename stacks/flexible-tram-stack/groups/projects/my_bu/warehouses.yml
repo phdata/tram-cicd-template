@@ -1,0 +1,17 @@
+model:
+  name: warehouse
+  defaults:
+    access_role_name:
+      prefix: AR_
+      admin_suffix: _ADMIN
+      use_suffix: _USE
+    warehouse_size: XSMALL
+    scaling_policy: ECONOMY
+    auto_suspend: 600
+    auto_resume: true
+    min_cluster_count: 1
+    max_cluster_count: 1
+    use_tags: false
+members: # recommended pattern: {{business_unit}}_{{purpose}}_wh
+  - wh_name: BU_ADHOC_WH
+    rm_name: MY_BU_RM

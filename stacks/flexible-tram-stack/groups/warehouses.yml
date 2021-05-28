@@ -1,0 +1,29 @@
+model:
+  name: warehouse
+  defaults:
+    access_role_name:
+      prefix: AR_
+      admin_suffix: _ADMIN
+      use_suffix: _USE
+    warehouse_size: XSMALL
+    scaling_policy: ECONOMY
+    auto_suspend: 600
+    auto_resume: true
+    min_cluster_count: 1
+    max_cluster_count: 1
+    use_tags: true
+members: # recommended pattern: {{project_name}}_{{business_unit}}_{{purpose}}_wh
+  - wh_name: GENERAL_DBAS_ADHOC_WH
+    rm_name: DEFAULT_ACCOUNT_RM
+    tag_pairs:
+      - tag_name: bu
+        tag_value: dbas
+      - tag_name: orgid
+        tag_value: 12345
+  - wh_name: SANDBOX_WH
+    rm_name: DEFAULT_ACCOUNT_RM
+    tag_pairs:
+      - tag_name: bu
+        tag_value: corp
+      - tag_name: orgid
+        tag_value: 42235

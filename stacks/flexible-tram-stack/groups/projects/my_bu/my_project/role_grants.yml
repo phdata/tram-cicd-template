@@ -1,0 +1,6 @@
+model:
+  name: role_grant
+members:
+  - role_name: MY_ROLE2
+    user_name: EHYRKAS
+ 

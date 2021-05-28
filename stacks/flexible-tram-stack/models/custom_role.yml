@@ -1,0 +1,11 @@
+roles:
+  - name: "{{role_name}}"
+roleGrants:
+  - name: {{role_name}}
+    roles: 
+      - SYSADMIN
+  {{#access_roles}}
+  - name: "{{.}}"
+    roles:
+      - "{{role_name}}"
+  {{/access_roles}}

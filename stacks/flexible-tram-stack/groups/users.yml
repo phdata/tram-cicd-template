@@ -1,0 +1,12 @@
+model:
+  name: user
+  defaults:
+    functional_role_prefix: "FR_"
+    sandbox_access_role_name:
+      prefix: AR_
+      admin_suffix: _ADMIN
+    use_composite_role: false
+    shared_sandbox_db_name: "" # set to "" to give each user their own sandbox database
+    use_sandbox: false
+    sandbox_warehouse_role: AR_SANDBOX_WH_USE
+groupDN: "CN=snowflake_users,OU=my_groups,OU=my_specific_ou,DC=phdata,DC=io"

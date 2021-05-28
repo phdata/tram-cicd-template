@@ -1,0 +1,269 @@
+{{#access_role_name}}
+databases:
+  - name: "{{ database_name }}"
+    schemas:
+      {{#schemas}}
+      - name: "{{schema_name}}"
+        parameters:
+          - name: DATA_RETENTION_TIME_IN_DAYS
+            value: {{schema_data_retention_days}}
+        {{#stage_name}}
+        stages:
+          - name: "{{stage_name}}"
+        {{/stage_name}}
+      {{/schemas}}
+    {{#use_tags}}
+    tags:
+      {{#tag_pairs}}
+      {{tag_name}}: {{tag_value}}
+      {{/tag_pairs}}
+    {{/use_tags}}
+    parameters:
+      - name: DATA_RETENTION_TIME_IN_DAYS
+        value: {{data_retention_days}}
+roles:
+  - name: {{prefix}}{{ database_name }}{{admin_suffix}}
+  - name: {{prefix}}{{ database_name }}{{maintain_suffix}}
+  - name: {{prefix}}{{ database_name }}{{report_suffix}}
+  {{#use_schema_access_roles}}
+  {{#schemas}}
+  - name: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
+  - name: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
+  - name: {{prefix}}{{ database_name }}_{{schema_name}}{{report_suffix}}
+  {{/schemas}}
+  {{/use_schema_access_roles}}
+privileges:
+  # ADMIN
+  - privilege: "ALL PRIVILEGES"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "MONITOR"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "CREATE SCHEMA"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "future schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "select"
+    objectType: "future tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "select"
+    objectType: "future views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  # Schema
+  {{#schemas}}
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  {{#use_schema_access_roles}}
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
+    grantOption: true
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{report_suffix}}
+    grantOption: false
+  {{/use_schema_access_roles}}
+  # Tables
+  - privilege: "ALL"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  # Views
+  - privilege: "ALL"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  {{#stage_name}}
+  # Stages
+  - privilege: "ALL"
+    objectType: "STAGE"
+    objectName: "{{stage_name}}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "READ, WRITE"
+    objectType: "STAGE"
+    objectName: "{{stage_name}}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  {{/stage_name}}
+  {{/schemas}}
+  {{#use_schema_access_roles}}
+  {{#schemas}}
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{report_suffix}}
+    grantOption: false
+  # Tables
+  - privilege: "ALL"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{report_suffix}}
+    grantOption: false
+  # Views
+  - privilege: "ALL"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "SELECT"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "{{ database_name }}.{{schema_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{report_suffix}}
+    grantOption: false
+  # Stages
+  - privilege: "ALL"
+    objectType: "STAGE"
+    objectName: "{{stage_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{admin_suffix}}
+    grantOption: true
+  - privilege: "READ, WRITE"
+    objectType: "STAGE"
+    objectName: "{{stage_name}}"
+    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
+    grantOption: false
+  {{/schemas}}
+  {{/use_schema_access_roles}}
+{{/access_role_name}}

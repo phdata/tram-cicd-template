@@ -1,0 +1,18 @@
+resourceMonitors:
+  - name: "{{rm_name}}"
+    creditQuota: {{ credit_quota }}
+    {{#frequency}}
+    frequency: {{ frequency }}
+    {{/frequency}}
+    {{#startTimestamp}}
+    startTimestamp: "'{{ startTimestamp }}'"
+    {{/startTimestamp}}
+    {{#endTimestamp}}
+    endTimestamp: "'{{ endTimestamp }}'"
+    {{/endTimestamp}}
+    triggers:
+      {{#triggers}}
+      - threshold: "{{ threshold }}"
+        action: "{{ action }}"
+      {{/triggers}}
+  

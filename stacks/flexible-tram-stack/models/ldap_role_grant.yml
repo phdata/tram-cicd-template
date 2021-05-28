@@ -1,0 +1,19 @@
+roles:
+  - name: {{role_name}}
+roleGrants:
+  - name: {{role_name}}
+    users:
+      - {{sAMAccountName}}
+  - name: {{role_name}}
+    roles:
+      - SYSADMIN
+  {{#access_roles}}
+  - name: {{.}}
+    roles:
+      - "{{role_name}}"
+  {{/access_roles}}
+  {{#grant_to_composite_role}}
+  - name: {{role_name}}
+    roles:
+      - "{{functional_role_prefix}}USER_{{ sAMAccountName }}"
+  {{/grant_to_composite_role}}

@@ -1,0 +1,169 @@
+users:
+  - name: "{{sAMAccountName}}"
+    parameters:
+      - name: LOGIN_NAME
+        value: "'{{userPrincipalName}}'"
+      {{#mail}}
+      - name: email
+        value: "'{{mail}}'"
+      {{/mail}}
+      {{#givenname}}
+      - name: FIRST_NAME
+        value: "'{{givenname}}'"
+      {{/givenname}}
+      {{#sn}}
+      - name: LAST_NAME
+        value: "'{{sn}}'"
+      {{/sn}}
+      {{#use_composite_role}}
+      - name: DEFAULT_ROLE
+        value: "{{functional_role_prefix}}USER_{{ sAMAccountName }}"
+      {{/use_composite_role}}
+      - name: ABORT_DETACHED_QUERY
+        value: true
+{{^use_sandbox}}
+{{#use_composite_role}}
+roles:
+  - name: "{{functional_role_prefix}}USER_{{ sAMAccountName }}"
+roleGrants:
+  - name: "{{functional_role_prefix}}USER_{{ sAMAccountName }}"
+    users:
+      - "{{sAMAccountName}}"  
+{{/use_composite_role}}
+{{/use_sandbox}}
+
+# there is no "or" logic in mustache, so we have to duplicate code because tram doesn't support empty objects (roles/roleGrants)
+
+{{#use_sandbox}}
+{{#sandbox_access_role_name}}
+roles:
+  {{#use_composite_role}}
+  - name: "{{functional_role_prefix}}USER_{{ sAMAccountName }}"
+  {{/use_composite_role}}
+  {{^shared_sandbox_db_name}}
+  - name: {{functional_role_prefix}}SANDBOX_ROLE_FOR_{{ sAMAccountName }}
+  - name: {{prefix}}SANDBOX_{{ sAMAccountName }}{{admin_suffix}}
+  {{/shared_sandbox_db_name}}
+  {{#shared_sandbox_db_name}}
+  - name: {{prefix}}SANDBOX{{admin_suffix}} # admin role access role, user access role, user functional role
+  - name: {{prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+  - name: {{functional_role_prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+  {{/shared_sandbox_db_name}}
+roleGrants:
+  {{#use_composite_role}}
+  - name: "{{functional_role_prefix}}USER_{{ sAMAccountName }}"
+    users:
+      - "{{sAMAccountName}}"  
+  {{/use_composite_role}}
+  {{^shared_sandbox_db_name}}
+  - name: {{functional_role_prefix}}SANDBOX_ROLE_FOR_{{ sAMAccountName }}
+    users:
+      - "{{sAMAccountName}}"
+  - name: {{prefix}}SANDBOX_{{ sAMAccountName }}{{admin_suffix}}
+    roles:
+      - {{functional_role_prefix}}SANDBOX_ROLE_FOR_{{ sAMAccountName }}
+  {{#sandbox_warehouse_role}}
+  - name: {{sandbox_warehouse_role}}
+    roles:
+      - {{prefix}}SANDBOX_{{ sAMAccountName }}{{admin_suffix}}
+  {{/sandbox_warehouse_role}}
+  {{#use_composite_role}}
+  - name: {{functional_role_prefix}}SANDBOX_ROLE_FOR_{{ sAMAccountName }}
+    roles:
+      - "{{functional_role_prefix}}USER_{{ sAMAccountName }}"
+  {{/use_composite_role}}
+  {{/shared_sandbox_db_name}}
+  {{#shared_sandbox_db_name}}
+  - name: {{prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+    roles:
+      - {{functional_role_prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+  - name: {{functional_role_prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+    users:
+      - "{{sAMAccountName}}"
+  {{#sandbox_warehouse_role}}
+  - name: {{sandbox_warehouse_role}}
+    roles:
+      - {{functional_role_prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+  {{/sandbox_warehouse_role}}
+  {{#use_composite_role}}
+  - name: {{functional_role_prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+    roles:
+      - "{{functional_role_prefix}}USER_{{ sAMAccountName }}"
+  {{/use_composite_role}}
+  {{/shared_sandbox_db_name}}
+{{/sandbox_access_role_name}}
+{{/use_sandbox}}
+
+{{#use_sandbox}}
+databases:
+  {{^shared_sandbox_db_name}}
+  - name: "SANDBOX_{{ sAMAccountName }}"
+  {{/shared_sandbox_db_name}}
+  {{#shared_sandbox_db_name}}
+  - name: "{{ shared_sandbox_db_name }}"
+    schemas:
+      - name: "SANDBOX_{{ sAMAccountName }}"
+  {{/shared_sandbox_db_name}}
+privileges:
+  {{#sandbox_access_role_name}}
+  {{^shared_sandbox_db_name}}
+  # ADMIN
+  - privilege: "ALL PRIVILEGES"
+    objectType: "DATABASE"
+    objectName: "SANDBOX_{{ sAMAccountName }}"
+    roleName: {{prefix}}SANDBOX_{{ sAMAccountName }}{{admin_suffix}}
+    grantOption: true
+  {{/shared_sandbox_db_name}}
+  {{#shared_sandbox_db_name}}
+  # ADMIN
+  - privilege: "ALL PRIVILEGES"
+    objectType: "DATABASE"
+    objectName: "{{ shared_sandbox_db_name }}"
+    roleName: {{prefix}}SANDBOX{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "{{ shared_sandbox_db_name }}.SANDBOX_{{ sAMAccountName }}"
+    roleName: {{prefix}}SANDBOX{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "{{ shared_sandbox_db_name }}.SANDBOX_{{ sAMAccountName }}"
+    roleName: {{prefix}}SANDBOX{{admin_suffix}}
+    grantOption: true
+  # USER
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "{{ shared_sandbox_db_name }}"
+    roleName: {{prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "SCHEMA"
+    objectName: "{{ shared_sandbox_db_name }}.SANDBOX_{{ sAMAccountName }}"
+    roleName: {{prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+    grantOption: false
+  # Tables
+  - privilege: "ALL"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "{{ shared_sandbox_db_name }}.SANDBOX_{{ sAMAccountName }}"
+    roleName: {{prefix}}SANDBOX{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL"
+    objectType: "FUTURE TABLES IN SCHEMA"
+    objectName: "{{ shared_sandbox_db_name }}.SANDBOX_{{ sAMAccountName }}"
+    roleName: {{prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+    grantOption: false
+  # Views
+  - privilege: "ALL"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "{{ shared_sandbox_db_name }}.SANDBOX_{{ sAMAccountName }}"
+    roleName: {{prefix}}SANDBOX{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL"
+    objectType: "FUTURE VIEWS IN SCHEMA"
+    objectName: "{{ shared_sandbox_db_name }}.SANDBOX_{{ sAMAccountName }}"
+    roleName: {{prefix}}{{ shared_sandbox_db_name }}_ROLE_FOR_{{ sAMAccountName }}
+    grantOption: false
+  {{/shared_sandbox_db_name}}
+  {{/sandbox_access_role_name}}
+{{/use_sandbox}}

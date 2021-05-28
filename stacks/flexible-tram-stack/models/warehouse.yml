@@ -1,0 +1,50 @@
+{{#access_role_name}}
+roles:
+  - name: "{{prefix}}{{wh_name}}{{admin_suffix}}"
+  - name: "{{prefix}}{{wh_name}}{{use_suffix}}"
+warehouses:
+  - name: "{{wh_name}}"
+    parameters:
+      - name: WAREHOUSE_SIZE
+        value: "{{ warehouse_size }}"
+      - name: INITIALLY_SUSPENDED
+        value: true
+      - name: SCALING_POLICY
+        value: "{{ scaling_policy }}"
+      - name: AUTO_SUSPEND
+        value: "{{ auto_suspend }}"
+      - name: AUTO_RESUME
+        value: "{{ auto_resume }}"
+      - name: MIN_CLUSTER_COUNT
+        value: "{{ min_cluster_count }}"
+      - name: MAX_CLUSTER_COUNT
+        value: "{{ max_cluster_count }}"
+      {{#rm_name}}
+      - name: RESOURCE_MONITOR
+        value: "{{rm_name}}"
+      {{/rm_name}}
+    {{#use_tags}}
+    tags:
+      {{#tag_pairs}}
+      {{tag_name}}: {{tag_value}}
+      {{/tag_pairs}}
+    {{/use_tags}}
+privileges:
+  - privilege: "USAGE"
+    objectType: WAREHOUSE
+    objectName: "{{wh_name}}"
+    roleName: "{{prefix}}{{wh_name}}{{use_suffix}}"
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: WAREHOUSE
+    objectName: "{{wh_name}}"
+    roleName: "{{prefix}}{{wh_name}}{{admin_suffix}}"
+    grantOption: true
+  {{#rm_name}}
+  - privilege: "MONITOR"
+    objectType: "RESOURCE MONITOR"
+    objectName: "{{rm_name}}"
+    roleName: "{{prefix}}{{wh_name}}{{admin_suffix}}"
+    grantOption: false
+  {{/rm_name}}
+{{/access_role_name}}
