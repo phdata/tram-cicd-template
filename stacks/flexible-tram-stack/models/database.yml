@@ -54,6 +54,22 @@ privileges:
     objectName: "{{ database_name }}"
     roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
     grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  # Maintain
   - privilege: "USAGE"
     objectType: "DATABASE"
     objectName: "{{ database_name }}"
@@ -84,6 +100,22 @@ privileges:
     objectName: "{{ database_name }}"
     roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
     grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  # Report
   - privilege: "USAGE"
     objectType: "DATABASE"
     objectName: "{{ database_name }}"
@@ -92,104 +124,34 @@ privileges:
   - privilege: "USAGE"
     objectType: "future schemas in DATABASE"
     objectName: "{{ database_name }}"
-    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
     grantOption: false
   - privilege: "select"
     objectType: "future tables in DATABASE"
     objectName: "{{ database_name }}"
-    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
     grantOption: false
   - privilege: "select"
     objectType: "future views in DATABASE"
     objectName: "{{ database_name }}"
-    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
     grantOption: false
-  # Schema
+  - privilege: "USAGE"
+    objectType: "all schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "select"
+    objectType: "all tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "select"
+    objectType: "all views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
   {{#schemas}}
-  - privilege: "ALL PRIVILEGES"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
-    grantOption: false
-  - privilege: "ALL PRIVILEGES"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
-    grantOption: false
-  - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
-    grantOption: true
-  - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
-    grantOption: false
-  - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
-    grantOption: false
-  {{#use_schema_access_roles}}
-  - privilege: "ALL PRIVILEGES"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
-    grantOption: false
-  - privilege: "ALL PRIVILEGES"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
-    grantOption: false
-  - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
-    grantOption: true
-  - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
-    grantOption: false
-  - privilege: "USAGE"
-    objectType: "SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{report_suffix}}
-    grantOption: false
-  {{/use_schema_access_roles}}
-  # Tables
-  - privilege: "ALL"
-    objectType: "FUTURE TABLES IN SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
-    grantOption: true
-  - privilege: "ALL"
-    objectType: "FUTURE TABLES IN SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
-    grantOption: false
-  - privilege: "SELECT"
-    objectType: "FUTURE TABLES IN SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
-    grantOption: false
-  # Views
-  - privilege: "ALL"
-    objectType: "FUTURE VIEWS IN SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
-    grantOption: true
-  - privilege: "ALL"
-    objectType: "FUTURE VIEWS IN SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
-    grantOption: false
-  - privilege: "SELECT"
-    objectType: "FUTURE VIEWS IN SCHEMA"
-    objectName: "{{ database_name }}.{{schema_name}}"
-    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
-    grantOption: false
   {{#stage_name}}
   # Stages
   - privilege: "ALL"
@@ -204,13 +166,14 @@ privileges:
     grantOption: false
   {{/stage_name}}
   {{/schemas}}
+  # Schema
   {{#use_schema_access_roles}}
   {{#schemas}}
   - privilege: "USAGE"
     objectType: "DATABASE"
     objectName: "{{ database_name }}"
     roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{admin_suffix}}
-    grantOption: false
+    grantOption: true
   - privilege: "USAGE"
     objectType: "DATABASE"
     objectName: "{{ database_name }}"
