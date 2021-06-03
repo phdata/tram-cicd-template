@@ -3,6 +3,7 @@ groupDNs:
 model:
   name: ldap_role_grant
   defaults:
+    functional_role_prefix: "FR_"
     role_name: MY_ROLE
     grant_to_composite_role: false
     access_roles:
