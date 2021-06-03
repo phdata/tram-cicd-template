@@ -1,7 +1,7 @@
 model:
   name: custom_role
 members:
-  - role_name: MY_ROLE2
+  - role_name: FR_MY_ROLE2
     access_roles: 
       - AR_DEV_MONGO_MAINTAIN
       - AR_MYPROJECT_BU_INGEST_WH_USE
