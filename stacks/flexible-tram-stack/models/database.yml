@@ -34,6 +34,16 @@ roles:
   {{/use_schema_access_roles}}
 privileges:
   # ADMIN
+  - privilege: "ownership"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ownership"
+    objectType: "all schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: true
   - privilege: "ALL PRIVILEGES"
     objectType: "DATABASE"
     objectName: "{{ database_name }}"
@@ -55,17 +65,17 @@ privileges:
     roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
     grantOption: true
   - privilege: "ALL PRIVILEGES"
-    objectType: "schemas in DATABASE"
+    objectType: "all schemas in DATABASE"
     objectName: "{{ database_name }}"
     roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
     grantOption: true
   - privilege: "ALL PRIVILEGES"
-    objectType: "tables in DATABASE"
+    objectType: "all tables in DATABASE"
     objectName: "{{ database_name }}"
     roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
     grantOption: true
   - privilege: "ALL PRIVILEGES"
-    objectType: "views in DATABASE"
+    objectType: "all views in DATABASE"
     objectName: "{{ database_name }}"
     roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
     grantOption: true
@@ -229,4 +239,9 @@ privileges:
     grantOption: false
   {{/schemas}}
   {{/use_schema_access_roles}}
+roleGrants:
+  - name: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    roles:
+      - {{prefix}}{{ database_name }}{{admin_suffix}}
+
 {{/access_role_name}}
