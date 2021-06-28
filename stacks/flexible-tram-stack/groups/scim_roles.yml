@@ -1,7 +1,0 @@
-model:
-  name: scim_role
-members:
-  - role_name: SG_GSR_DEV
-    access_roles:
-      - AR_MANHEDW_DBA_ADHOC_WH_ADMIN
-      - AR_FIVETRAN_ADMIN  
