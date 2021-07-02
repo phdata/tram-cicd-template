@@ -8,7 +8,7 @@ model:
         tag_value: corp
       - tag_name: orgid
         tag_value: 42235
-    use_schema_access_roles: true
+    use_schema_access_roles: false
     access_role_name:
       prefix: AR_
       admin_suffix: _ADMIN

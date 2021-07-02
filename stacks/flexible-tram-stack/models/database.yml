@@ -166,12 +166,12 @@ privileges:
   # Stages
   - privilege: "ALL"
     objectType: "STAGE"
-    objectName: "{{stage_name}}"
+    objectName: "{{ database_name }}.{{schema_name}}.{{stage_name}}"
     roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
     grantOption: true
   - privilege: "READ, WRITE"
     objectType: "STAGE"
-    objectName: "{{stage_name}}"
+    objectName: "{{ database_name }}.{{schema_name}}.{{stage_name}}"
     roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
     grantOption: false
   {{/stage_name}}
@@ -227,16 +227,18 @@ privileges:
     roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{report_suffix}}
     grantOption: false
   # Stages
+  {{#stage_name}}
   - privilege: "ALL"
     objectType: "STAGE"
-    objectName: "{{stage_name}}"
+    objectName: "{{ database_name }}.{{schema_name}}.{{stage_name}}"
     roleName: {{prefix}}{{ database_name }}_{{schema_name}}{admin_suffix}}
     grantOption: true
   - privilege: "READ, WRITE"
     objectType: "STAGE"
-    objectName: "{{stage_name}}"
+    objectName: "{{ database_name }}.{{schema_name}}.{{stage_name}}"
     roleName: {{prefix}}{{ database_name }}_{{schema_name}}{{maintain_suffix}}
     grantOption: false
+  {{/stage_name}}
   {{/schemas}}
   {{/use_schema_access_roles}}
 roleGrants:
