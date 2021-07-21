@@ -6,11 +6,10 @@ DEFAULT_VERSION=$(cat TRAM_VERSION)
 TRAM_VERSION=${VERSION:-$DEFAULT_VERSION}
 
 echo "Using TRAM_VERSION: $TRAM_VERSION"
-
-path=https://repository.phdata.io/artifactory/libs-release-private/io/phdata/tram/$TRAM_VERSION/provisioning-$TRAM_VERSION.jar
+path=https://repo.phdata.io/$TRAM_ENTITLEMENT_TOKEN/tram-private/maven/io/phdata/cli/$TRAM_VERSION/cli-$TRAM_VERSION.jar
 
 echo "Using path: $path"
 
-curl --fail -o tram-provisioning.jar -H 'Accept: application/json' -H "Authorization: Bearer ${ARTIFACTORY_TOKEN}" $path
+curl --fail -o tram-provisioning.jar -H 'Accept: application/json' $path
 
 echo "Fetch successful"
