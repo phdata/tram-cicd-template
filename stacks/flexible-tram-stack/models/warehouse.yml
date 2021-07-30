@@ -9,16 +9,18 @@ warehouses:
         value: "{{ warehouse_size }}"
       - name: INITIALLY_SUSPENDED
         value: true
-      - name: SCALING_POLICY
-        value: "{{ scaling_policy }}"
       - name: AUTO_SUSPEND
         value: "{{ auto_suspend }}"
       - name: AUTO_RESUME
         value: "{{ auto_resume }}"
+      {{#use_multiclustering}}
+      - name: SCALING_POLICY
+        value: "{{ scaling_policy }}"
       - name: MIN_CLUSTER_COUNT
         value: "{{ min_cluster_count }}"
       - name: MAX_CLUSTER_COUNT
         value: "{{ max_cluster_count }}"
+      {{/use_multiclustering}}
       {{#rm_name}}
       - name: RESOURCE_MONITOR
         value: "{{rm_name}}"

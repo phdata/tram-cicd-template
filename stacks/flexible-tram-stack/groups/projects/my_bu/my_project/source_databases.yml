@@ -1,7 +1,7 @@
 model:
   name: database
   defaults:
-    data_retention_days: 90
+    data_retention_days: 1
     use_tags: true
     tag_pairs:
       - tag_name: bu
@@ -17,14 +17,15 @@ model:
     schemas:
       - schema_name: RAW
         stage_name: INTERNAL_STAGE
-        schema_data_retention_days: 90
+        schema_data_retention_days: 1
       - schema_name: CLEAN
         stage_name: ""    
-        schema_data_retention_days: 7
+        schema_data_retention_days: 1
 members:
   - database_name: MYUSER_MONGO
-    data_retention_days: 3
+    data_retention_days: 1
   - database_name: DEV_MONGO
-    data_retention_days: 3
+    data_retention_days: 1
   - database_name: PROD_MONGO
+    data_retention_days: 1
 

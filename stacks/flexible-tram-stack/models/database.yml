@@ -39,8 +39,20 @@ privileges:
     objectName: "{{ database_name }}"
     roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
     grantOption: true
+    currentGrants: COPY
   - privilege: "ownership"
     objectType: "all schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: true
+    currentGrants: COPY
+  - privilege: "ownership"
+    objectType: "future schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: true
+  - privilege: "ownership"
+    objectType: "future tables in DATABASE"
     objectName: "{{ database_name }}"
     roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
     grantOption: true
@@ -245,5 +257,13 @@ roleGrants:
   - name: {{prefix}}{{ database_name }}{{maintain_suffix}}
     roles:
       - {{prefix}}{{ database_name }}{{admin_suffix}}
-
+  - name: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    roles:
+      - SYSADMIN
+  - name: {{prefix}}{{ database_name }}{{admin_suffix}}
+    roles:
+      - SYSADMIN
+  - name: {{prefix}}{{ database_name }}{{report_suffix}}
+    roles:
+      - SYSADMIN
 {{/access_role_name}}
