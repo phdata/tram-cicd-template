@@ -6,9 +6,10 @@ model:
       admin_suffix: _ADMIN
       use_suffix: _USE
     warehouse_size: XSMALL
-    scaling_policy: ECONOMY
+    scaling_policy: STANDARD
     auto_suspend: 600
     auto_resume: true
+    use_multiclustering: false
     min_cluster_count: 1
     max_cluster_count: 1
     use_tags: false

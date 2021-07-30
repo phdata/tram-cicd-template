@@ -6,7 +6,7 @@ model:
       admin_suffix: _ADMIN
       use_suffix: _USE
     warehouse_size: XSMALL
-    scaling_policy: ECONOMY
+    scaling_policy: STANDARD
     auto_suspend: 600
     auto_resume: true
     min_cluster_count: 1
@@ -14,4 +14,6 @@ model:
     use_tags: false
 members: # recommended pattern: {{project_name}}_{{business_unit}}_{{purpose}}_wh
   - wh_name: MYPROJECT_BU_INGEST_WH
+    rm_name: MY_PROJECT_RM
+  - wh_name: BU_ADHOC_WH
     rm_name: MY_PROJECT_RM
