@@ -36,12 +36,10 @@ Monitoring and alerting is handled by the build tool using their existing monito
 
 The `bin/tram-fetch` scripts will pull Tram from a secured repository managed by phData. The tram version used can be updated by changing the version number in the `TRAM_VERSION` file at the repository root.
 
-The client will be provided with an environment-specific set of credentials and a url to fetch Tram. These should be set in the build environment as:
+The client will be provided with a token to fetch Tram. These should be set in the build environment as:
 
 ```
-ARTIFACTORY_URL
-ARTIFACTORY_USER
-ARTIFACTORY_TOKEN
+TRAM_ENTITLEMENT_TOKEN=<token>
 ```
 
 #### Choosing a Stack
