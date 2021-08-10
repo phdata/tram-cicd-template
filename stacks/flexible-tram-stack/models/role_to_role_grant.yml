@@ -1,0 +1,4 @@
+roleGrants:
+  - name: "{{ access_role }}"
+    roles: 
+      - {{ role_name }}

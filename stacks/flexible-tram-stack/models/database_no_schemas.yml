@@ -1,0 +1,171 @@
+{{#access_role_name}}
+databases:
+  - name: "{{ database_name }}"
+    {{#use_tags}}
+    tags:
+      {{#tag_pairs}}
+      {{tag_name}}: {{tag_value}}
+      {{/tag_pairs}}
+    {{/use_tags}}
+    parameters:
+      - name: DATA_RETENTION_TIME_IN_DAYS
+        value: {{data_retention_days}}
+roles:
+  - name: {{prefix}}{{ database_name }}{{admin_suffix}}
+  - name: {{prefix}}{{ database_name }}{{maintain_suffix}}
+  - name: {{prefix}}{{ database_name }}{{report_suffix}}
+privileges:
+  # ADMIN
+  - privilege: "ownership"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+    currentGrants: COPY
+  - privilege: "ownership"
+    objectType: "all schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: true
+    currentGrants: COPY
+  - privilege: "ownership"
+    objectType: "future schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: true
+  - privilege: "ownership"
+    objectType: "future tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{admin_suffix}}
+    grantOption: true
+  # Maintain
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "MONITOR"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "CREATE SCHEMA"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "future views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  - privilege: "ALL PRIVILEGES"
+    objectType: "all views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    grantOption: false
+  # Report
+  - privilege: "USAGE"
+    objectType: "DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "future schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "select"
+    objectType: "future tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "select"
+    objectType: "future views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "USAGE"
+    objectType: "all schemas in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "select"
+    objectType: "all tables in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+  - privilege: "select"
+    objectType: "all views in DATABASE"
+    objectName: "{{ database_name }}"
+    roleName: {{prefix}}{{ database_name }}{{report_suffix}}
+    grantOption: false
+roleGrants:
+  - name: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    roles:
+      - {{prefix}}{{ database_name }}{{admin_suffix}}
+  - name: {{prefix}}{{ database_name }}{{maintain_suffix}}
+    roles:
+      - SYSADMIN
+  - name: {{prefix}}{{ database_name }}{{admin_suffix}}
+    roles:
+      - SYSADMIN
+  - name: {{prefix}}{{ database_name }}{{report_suffix}}
+    roles:
+      - SYSADMIN
+{{/access_role_name}}

@@ -1,0 +1,11 @@
+model:
+  name: role_to_role_grant
+members:
+  - role_name: MY_SCIM_ROLE
+    access_role: AR_MYPROJECT_BU_INGEST_WH_USE
+  - role_name: MY_SCIM_ROLE
+    access_role: AR_DEV_MONGO_MAINTAIN
+  - role_name: FR_MY_ROLE
+    access_role: AR_MYPROJECT_BU_INGEST_WH_USE
+  - role_name: FR_MY_ROLE
+    access_role: AR_DEV_MONGO_MAINTAIN

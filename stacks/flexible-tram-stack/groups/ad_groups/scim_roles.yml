@@ -1,7 +1,0 @@
-model:
-  name: scim_role
-members:
-  - role_name: MY_SCIM_ROLE
-    access_roles:
-      - AR_MYPROJECT_BU_INGEST_WH_USE
-      - AR_DEV_MONGO_MAINTAIN
