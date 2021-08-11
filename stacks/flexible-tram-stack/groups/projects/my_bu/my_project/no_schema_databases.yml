@@ -1,5 +1,5 @@
 model:
-  name: database
+  name: no_schema_database
   defaults:
     data_retention_days: 1
     use_tags: true
