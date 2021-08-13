@@ -1,5 +1,5 @@
 model:
-  name: role_grant
+  name: role_to_user_grant
 members:
   - role_name: FR_MY_ROLE2
     user_name: EHYRKAS

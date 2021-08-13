@@ -1,4 +1,5 @@
 # this file is an example of manually creating users rather than through AD
+# delete this file if you are using ad_groups/users_ad.yml
 model:
   name: user
   defaults:

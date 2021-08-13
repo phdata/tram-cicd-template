@@ -1,7 +1,0 @@
-roleGrants:
-  - name: {{ role_name }}
-  {{#access_roles}}
-  - name: "{{.}}"
-    roles: 
-      - {{ role_name }}
-  {{/access_roles}}

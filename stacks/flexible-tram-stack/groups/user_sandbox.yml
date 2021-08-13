@@ -1,0 +1,14 @@
+# this file is an example of manually creating sandboxes for users 
+model:
+  name: sandbox_only
+  defaults:
+    functional_role_prefix: "FR_"
+    sandbox_access_role_name:
+      prefix: AR_
+      admin_suffix: _ADMIN
+    use_composite_role: true
+    shared_sandbox_db_name: "" # set to "" to give each user their own sandbox database
+    use_sandbox: true
+    sandbox_warehouse_role: AR_GENERAL_DBA_ADHOC_WH_USE
+members:
+  - user_name: MYUSER
