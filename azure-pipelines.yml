@@ -1,0 +1,43 @@
+trigger:
+  - master
+pr:
+  branches:
+    include:
+      - '*'  # must quote since "*" is a YAML reserved character; we want a string
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Validate
+    condition: eq(variables['Build.Reason'], 'PullRequest')
+    jobs:
+      - job: DryRun
+        steps:
+          - task: Bash@3
+            displayName: "Tram Dry Run"
+            inputs:
+              filePath: bin/tram-dry-run
+            env:
+              TRAM_SNOWFLAKE_URL: $(TramSnowflakeUrl)
+              TRAM_SNOWFLAKE_USER: $(TramSnowflakeUser)
+              TRAM_SNOWFLAKE_PASSWORD: $(TramSnowflakePassword)
+              TRAM_ENTITLEMENT_TOKEN: $(TramEntitlementToken)
+              STACK: stacks/source-product
+
+  - stage: Deploy
+    condition: eq(variables['Build.SourceBranchName'], 'master')
+    jobs:
+      - job: Deploy
+        steps:
+          - task: Bash@3
+            displayName: "Tram Provision"
+            inputs:
+              filePath: bin/tram-provision
+            env:
+              TRAM_SNOWFLAKE_URL: $(TramSnowflakeUrl)
+              TRAM_SNOWFLAKE_USER: $(TramSnowflakeUser)
+              TRAM_SNOWFLAKE_PASSWORD: $(TramSnowflakePassword)
+              TRAM_ENTITLEMENT_TOKEN: $(TramEntitlementToken)
+              STACK: stacks/source-product
+
