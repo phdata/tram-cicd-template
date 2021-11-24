@@ -20,14 +20,18 @@ stages:
               filePath: bin/tram-fetch
             env:
               TRAM_ENTITLEMENT_TOKEN: $(TramEntitlementToken)
+          - task: DownloadSecureFile@1
+            name: snowflake_key
+            displayName: 'Download Snowflake Key File'
+            inputs:
+              secureFile: 'snowflake_key.p8'
           - task: Bash@3
             displayName: "Tram Dry Run"
             inputs:
               filePath: bin/tram-dry-run
             env:
-              TRAM_SNOWFLAKE_URL: $(TramSnowflakeUrl)
+              TRAM_SNOWFLAKE_URL: '$(TramSnowflakeUrl)$(snowflake_key.secureFilePath)&private_key_file_pwd=$(TramSnowflakePrivKeyPassword)'
               TRAM_SNOWFLAKE_USER: $(TramSnowflakeUser)
-              TRAM_SNOWFLAKE_PASSWORD: $(TramSnowflakePassword)
               STACK_PATH: stacks/source-product
 
   - stage: Deploy
@@ -41,13 +45,16 @@ stages:
               filePath: bin/tram-fetch
             env:
               TRAM_ENTITLEMENT_TOKEN: $(TramEntitlementToken)
+          - task: DownloadSecureFile@1
+            name: snowflake_key
+            displayName: 'Download Snowflake Key File'
+            inputs:
+              secureFile: 'snowflake_key.p8'
           - task: Bash@3
             displayName: "Tram Provision"
             inputs:
               filePath: bin/tram-provision
             env:
-              TRAM_SNOWFLAKE_URL: $(TramSnowflakeUrl)
+              TRAM_SNOWFLAKE_URL: '$(TramSnowflakeUrl)$(snowflake_key.secureFilePath)&private_key_file_pwd=$(TramSnowflakePrivKeyPassword)'
               TRAM_SNOWFLAKE_USER: $(TramSnowflakeUser)
-              TRAM_SNOWFLAKE_PASSWORD: $(TramSnowflakePassword)
               STACK_PATH: stacks/source-product
-
