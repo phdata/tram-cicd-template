@@ -12,11 +12,13 @@ pipelines:
     - step: &dry-run
         name: "Dry Run"
         script:
+          - chmod +x bin/tram-dry-run
           - bin/tram-dry-run
           - cat tram-statements.sql
     - step: &provision
         name: "Dry Run"
         script:
+          - chmod +x bin/tram-provision
           - bin/tram-provision
   default:
     - step: *fetch
