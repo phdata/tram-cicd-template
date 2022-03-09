@@ -5,6 +5,7 @@ pipelines:
     - step: &fetch
         name: "Fetch Tram"
         script:
+          - chmod +x bin/tram-fetch
           - bin/tram-fetch
         artifacts:
           - tram-provisioning.jar
