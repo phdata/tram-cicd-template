@@ -1,0 +1,33 @@
+version: 0.2
+
+env:
+  variables:
+    TRAM_PRIVATE_KEY_PEM: /svc/tram/private_key_pem
+    STACK_PATH: stacks/source-product
+    pr_comments: enable
+  parameter-store:
+    TRAM_SNOWFLAKE_URL: /CodeBuild/tram/snowflake/url
+    TRAM_SNOWFLAKE_USER: /CodeBuild/tram/snowflake/user
+    TRAM_SNOWFLAKE_PASSWORD: /CodeBuild/tram/snowflake/password
+    TRAM_ENTITLEMENT_TOKEN: /codebuild/tram/entitlement-token
+    bb_app_user: /CodeBuild/bb_codebuild_user
+    bb_app_pwd: /CodeBuild/bb_codebuild_pwd
+phases:
+  install:
+    runtime-versions:
+       java: corretto11
+  pre_build: 
+    commands:
+       - echo "TRAM PRE-BUILD"   
+  build:
+    commands:
+       - export stage="build"
+       - echo "TRAM BUILD"
+       - chmod +x $CODEBUILD_SRC_DIR/bin/*
+       - $CODEBUILD_SRC_DIR/bin/bitbucket-build-aws.sh
+  post_build:
+    commands:
+      - export stage="post_build"
+      - echo "TRAM post_build"
+      - chmod +x $CODEBUILD_SRC_DIR/bin/*
+      - $CODEBUILD_SRC_DIR/bin/bitbucket-build-aws.sh
