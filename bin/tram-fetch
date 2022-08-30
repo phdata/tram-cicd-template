@@ -1,15 +1,10 @@
 #!/bin/bash
 set -eu -o pipefail
 
-DEFAULT_VERSION=$(cat TRAM_VERSION)
+# TRAM_DOWNLOAD_URL : After getting tram download url from Tool Access Page export the variable with complete url
+# export TRAM_DOWNLOAD_URL=<Tram URL copied from toolkit access page>
+echo "Tram Download URL: $TRAM_DOWNLOAD_URL"
 
-TRAM_VERSION=${VERSION:-$DEFAULT_VERSION}
-
-echo "Using TRAM_VERSION: $TRAM_VERSION"
-path=https://repo.phdata.io/$TRAM_ENTITLEMENT_TOKEN/tram-private/maven/io/phdata/cli/$TRAM_VERSION/cli-$TRAM_VERSION.jar
-
-echo "Using path: $path"
-
-curl --fail -o tram-provisioning.jar -H 'Accept: application/json' $path
+curl --fail -o tram-provisioning.jar -H 'Accept: application/json' $TRAM_DOWNLOAD_URL
 
 echo "Fetch successful"
