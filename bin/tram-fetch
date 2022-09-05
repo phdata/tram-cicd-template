@@ -2,13 +2,16 @@
 
 # TRAM_DOWNLOAD_URL : After getting tram download url from Tool Access Page export the variable with complete url
 # export TRAM_DOWNLOAD_URL=<Tram URL copied from toolkit access page>
-if [[ -z "${TRAM_DOWNLOAD_URL}" ]]; then
+if ! [[ -z "${TRAM_DOWNLOAD_URL}" ]]; then
+    echo "Tram Download URL: $TRAM_DOWNLOAD_URL"
+    curl --fail -o tram-provisioning.jar -H 'Accept: application/json' $TRAM_DOWNLOAD_URL
+else 
     TRAM_VERSION=${VERSION:-$DEFAULT_VERSION}
     echo "Using TRAM_VERSION: $TRAM_VERSION"
     TRAM_DOWNLOAD_URL=https://repo.phdata.io/$TRAM_ENTITLEMENT_TOKEN/tram-private/maven/io/phdata/cli/$TRAM_VERSION/cli-$TRAM_VERSION.jar
+    echo "Tram Download URL: $TRAM_DOWNLOAD_URL"
+    curl --fail -o tram-provisioning.jar -H 'Accept: application/json' $TRAM_DOWNLOAD_URL
 fi
 
-echo "Tram Download URL: $TRAM_DOWNLOAD_URL"
-curl --fail -o tram-provisioning.jar -H 'Accept: application/json' $TRAM_DOWNLOAD_URL
 
 echo "Fetch successful"
