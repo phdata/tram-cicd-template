@@ -81,7 +81,7 @@ Change the log level by setting the `LOG_LEVEL` env variable, for example: `LOG_
 
 #### Active Directory Synchronization
 
-Full documentation for Active Directory synchronization can be found [here](https://docs.customer.phdata.io/docs/tram/latest/user-manual/#active-directory-synchronization)
+Full documentation for Active Directory synchronization can be found [here](https://toolkit.phdata.io/resources/documentation/project-administration/user-manual#active-directory-synchronization)
 
 If Tram groups are synchronized with Active Directory, the following properties must be set in `application.properties`
 
