@@ -1,0 +1,16 @@
+databases:
+ - name: governance
+   schemas:
+     - name: tag_library
+       tagObjects:
+         - name: "department" # (required)
+           comment: "department tag" # (optional)
+           allowedValues: # (optional)
+             - sales
+             - engineering
+         - name: "region" # (required)
+           comment: "region tag" # (optional)
+           allowedValues: # (optional)
+             - EMEA
+             - NA
+             - APAC

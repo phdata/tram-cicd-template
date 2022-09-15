@@ -1,0 +1,15 @@
+model:
+  name: tag_objects
+  defaults:
+    tag_database: governance
+    tag_schema: tag_library
+members:
+  - tag_name: department
+    comment: "department tag comment"
+    allowedValues: "sales,operations"
+  - tag_name: environment
+    comment: "environment tag comment"
+    allowedValues: "dev, int, prod"
+  - tag_name: security_class
+    comment: "environment tag comment"
+    allowedValues: "PII, PCI, PHI"

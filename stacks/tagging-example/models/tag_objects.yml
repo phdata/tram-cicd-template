@@ -1,0 +1,12 @@
+databases:
+  - name: {{ tag_database }}
+    schemas:
+      - name: {{tag_schema}}
+        tagObjects:
+          - name: {{tag_name}}
+            {{#comment}}
+            comment: "{{comment}}"
+            {{/comment}}
+            {{#allowedValues}}
+            allowedValues: [{{allowedValues}}]
+            {{/allowedValues}}

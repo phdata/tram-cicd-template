@@ -1,0 +1,9 @@
+users:
+ - name: "USER1"
+   tags:
+     governance.tag_library.department: sales
+
+roles:
+ - name: "EMEA_READ_WRITE"
+   tags:
+     governance.tag_library.region: EMEA
