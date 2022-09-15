@@ -1,0 +1,27 @@
+# creates role TAG_ADMIN
+roles:
+- name: TAG_ADMIN
+
+# Grants TAG_ADMIN role to Tram service account TRAM_USER
+roleGrants:
+- name: TAG_ADMIN
+  users:
+    - TRAM_USER
+
+# privileges section grants the required privileges to TAG_ADMIN
+#1 usage privileges on tag_database
+#2 usage privileges on tag_database.tag_schema
+#3 create tag privilege on tag_database.tag_schema
+privileges:
+- privilege: USAGE
+  objectType: DATABASE
+  objectName: governance
+  roleName: TAG_ADMIN
+- privilege: USAGE
+  objectType: SCHEMA
+  objectName: "governance.tag_library"
+  roleName: TAG_ADMIN
+- privilege: "CREATE TAG"
+  objectType: SCHEMA
+  objectName: "governance.tag_library"
+  roleName: TAG_ADMIN
