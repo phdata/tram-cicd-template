@@ -32,15 +32,20 @@ Each build tool’s build definition language is slightly different. phData can 
 
 Monitoring and alerting is handled by the build tool using their existing monitoring and alerting mechanisms. The phData team should have access to the build logs and alerts so they can assist in troubleshooting and fixing configuration or application issues.
 
-#### Upgrading Tram
+#### Downloading Tram
 
-The `bin/tram-fetch` scripts will pull Tram from a secured repository managed by phData. The tram version used can be updated by changing the version number in the `TRAM_VERSION` file at the repository root.
+The `bin/tram-fetch` scripts will pull Tram from a secured repository managed by phData. Follow below steps to get the tram download url.
 
-The client will be provided with a token to fetch Tram. These should be set in the build environment as:
+* Login into [Toolkit](https://toolkit.phdata.io/)
+* Navigate to [Toolkit Tool Access](https://toolkit.phdata.io/user/tool-access) 
+* Under `Download Tools`, choose `tram` in the Tool select box
+* Copy and export the download url.
 
 ```
-TRAM_ENTITLEMENT_TOKEN=<token>
+TRAM_DOWNLOAD_URL=<tram_download_url>
 ```
+
+*Note:* Tram version details are available in [changelog](https://toolkit.phdata.io/resources/documentation/project-administration/changelog), to download specific version replace the version in *TRAM_DOWNLOAD_URL* or reach out to [support](https://toolkit.phdata.io/resources/support)
 
 #### Choosing a Stack
 
@@ -76,7 +81,7 @@ Change the log level by setting the `LOG_LEVEL` env variable, for example: `LOG_
 
 #### Active Directory Synchronization
 
-Full documentation for Active Directory synchronization can be found [here](https://docs.customer.phdata.io/docs/tram/latest/user-manual/#active-directory-synchronization)
+Full documentation for Active Directory synchronization can be found [here](https://toolkit.phdata.io/resources/documentation/project-administration/user-manual#active-directory-synchronization)
 
 If Tram groups are synchronized with Active Directory, the following properties must be set in `application.properties`
 
