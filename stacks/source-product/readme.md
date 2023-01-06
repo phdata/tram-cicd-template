@@ -27,7 +27,7 @@ At the core of this stack are 3 distinct groupings of databases, schemas, wareho
 
 [User](models/user.yml) models create new user, create a new schema `{{ username }}` in the `USER` database, and grant access to the `USER_ADH_WH` warehouse (ADH stands for adhoc).
 
-![Tram User model](https://github.com/phdata/tram-cicd-template/blob/main/stacks/source-product/docs/images/phdata-tram-base-stack-user.png?raw=true)
+![Tram User model](docs/images/phdata-tram-base-stack-user.png "Tram User Model")
 
 A user workspace can be granted access to sources or products using the [groups/user-sources.yml](groups/users-sources.yml) or [groups/user-products.yml](groups/user-products.yml).  Adding entries in these files allow a user to develop in their workspace against a source or product dataset.
 
